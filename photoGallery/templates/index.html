@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% load staticfiles %} {% block content %}
+
+
+<div class="header">
+    <div class="jumbotron">
+        <h1>PhotoGram</h1>
+        <p>Heyooo</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class=" row">
+        {% for photograph in photographs %}
+        <div class="col-md-4">
+            <div class="photographItem thumbnail">
+                <p>
+                    <a href="/{{photograph.id}}/">
+                        <img src="{{ photograph.image.url }}" alt="{{photograph.name}}">
+                    </a>
+                </p>
+                <div class="caption">
+                    <h3>{{photograph.name}}</h3>
+                    <p><a href="/{{photograph.id}}/" class="btn btn-primary" role="button">Details</a>
+                        <a href="/user/{{photograph.user.username}}" class="btn btn-default" role="button">by {{photograph.user.username}}</a>
+                        <button id="likes" data-id="{{photograph.id}}" class="btn btn-primary btn-round" type="button">
+                            <i class="material-icons">favorite</i> {% if photograph.likes > 0 %} {{photograph.likes}} {% endif %}
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+    </div>
+    <br>
+    <div class="row">
+        {% endif %} {% endfor %}
+    </div>
+
+
+
+    <div class="panel-body">
+        <form enctype="multipart/form-data" action="post_url/" method="post"> {% comment %} enctype is needed when uploading files to server{% endcomment %} {% csrf_token %} {{form.as_p}}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+{% endblock content %}

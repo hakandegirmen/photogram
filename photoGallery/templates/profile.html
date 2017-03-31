@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% load staticfiles %} {% block content %}
+
+<div class="wrapper">
+    <div class="header">
+        <div class="jumbotron">
+            <h1>{{ username }}</h1>
+            <p>...</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        {% for photograph in photographs %}
+        <div class="col-md-4">
+
+            <div class="thumbnail">
+
+                <img src="{{ photograph.image.url }}" alt="{{photograph.name}}">
+                <div class="caption">
+                    <h3>{{photograph.name}}</h3>
+                    <p>{{photograph.location}}</p>
+                    <p>{{photograph.date}}</p>
+                    <p><a href="/{{photograph.id}}/" class="btn btn-primary" role="button">Details</a>
+                        <a href="/user/{{photograph.user.username}}" class="btn btn-default" role="button">by {{photograph.user.username}}</a></p>
+
+                </div>
+
+            </div>
+
+        </div>
+        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+    </div>
+    <br>
+    <div class="row">
+        {% endif %} {% endfor %}
+    </div>
+
+
+</div>
+
+
+
+{% endblock content %}
